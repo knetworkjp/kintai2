@@ -1,0 +1,33 @@
+<!--
+<ons-page>
+  <ons-list>
+    <ons-list-item id="home" ng-click="app.changetab(0)" tappable>ホーム</ons-list-item>
+    <ons-list-item id="setting" ng-click="app.navi('view/settings.html')" tappable>各種設定</ons-list-item>
+    <ons-list-item id="setting" ng-click="app.navi('view/about.html')" tappable>このアプリについて</ons-list-item>
+  </ons-list>
+</ons-page>
+-->
+<ons-page>
+  <ons-toolbar>
+    <div class="center">
+          プロフィール
+    </div>
+  </ons-toolbar>
+        <ons-list>
+          <ons-list-item id="name" ng-click="app.navi('view/name.html')" tappable>
+            名前
+          </ons-list-item>
+          <ons-list-item id="birthday" ng-click="app.navi('view/birthday.html')" tappable>
+            誕生日
+          </ons-list-item>
+          <ons-list-item id="teiji" ng-click="app.navi('view/teiji.html')" tappable>
+            定時変更
+          </ons-list-item>
+          <ons-list-item id="rest" ng-click="app.navi('view/rest.html')" tappable>
+            休憩時間変更
+          </ons-list-item>
+          <ons-list-item id="koyo" ng-click="app.load('view/koyou.html')" tappable>
+            雇用形態変更
+          </ons-list-item>
+        </ons-list>
+</ons-page>

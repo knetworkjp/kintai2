@@ -1,0 +1,37 @@
+<ons-page id="breakdown" ng-controller="KintaiController as kintai">
+      <ons-toolbar><!--本当はツールバーの表示は一つのテンプレートに書いたほうがSPAぽくていい-->
+        <div class="left">
+          <ons-toolbar-button ng-click="app.toggle()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          勤怠
+        </div>
+      </ons-toolbar>
+      <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
+        Swipe right to open the menu!
+      </p>
+      <div id="canvas-holder" style="width:100%">
+      <h4>今日の業務時間内訳</h4>
+      <!-- 業務時間内訳表示エリア -->
+      <p id="worktime">
+      </p>
+      <p id="breaktime">
+      </p>
+      <!-- 棒グラフの表示エリア -->
+      <canvas id="bar-chart-area" width="300" height="100">
+      </canvas>
+    </div>
+      <ons-list>
+      <ons-button id="syusya" modifier="material" ng-click="kintai.buttonManager(1)">出社</ons-button>
+      <br />
+      <ons-button id="kyukei" modifier="material" ng-click="kintai.buttonManager(2)">休憩</ons-button>
+          <ons-list-item ng-click="kintai.buttonManager(3)" tappable>  <!--alertで表示できそう-->
+            退社
+          </ons-list-item>
+          <ons-list-item ng-click="kintai.buttonManager(4)" tappable>
+            提出
+          </ons-list-item>
+        </ons-list>
+    </ons-page>

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <script src="lib/angular/angular.min.js"></script>
+  <script src="lib/onsenui/js/onsenui.min.js"></script>
+  <script src="lib/onsenui/js/angular-onsenui.min.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/app.js"></script>
+  <script src="js/controller/app.js"></script>
+  <script src="js/controller/tab.js"></script>
+  <script src="js/controller/home.js"></script>
+  <script src="js/controller/calendar.js"></script>
+  <script src="js/controller/kintai.js"></script>
+  <script src="js/controller/settings.js"></script>
+  <script src="js/controller/about.js"></script>
+    
+</head>
+
+<body>
+<!--
+<ons-page ng-controller="HelloController as hello" ng-show=false>
+    <ons-toolbar>
+      <div class="center">ログイン</div>
+    </ons-toolbar>
+    <section style="margin: 10px;" ng-hide="hello.isLoggedIn">
+      <p>メールアドレス</p>
+      <p>
+        <ons-input modifier="underbar" ng-model="hello.newMail" placeholder="メールアドレス" float></ons-input>
+      </p>
+      <p>パスワード</p>
+      <p>
+        <ons-input modifier="underbar" ng-model="hello.newPassword" placeholder="password" type="password" float></ons-input>
+      </p>
+      <ons-button ng-click="hello.regi()">新規登録</ons-button>
+    </section>
+    <section style="margin: 10px;" ng-hide="hello.isLoggedIn">
+      <p>メールアドレス</p>
+      <p>
+        <ons-input modifier="underbar" ng-model="hello.mail" placeholder="メールアドレス" float></ons-input>
+      </p>
+      <p>パスワード</p>
+      <p>
+        <ons-input modifier="underbar" ng-model="hello.password" placeholder="password" type="password" float></ons-input>
+      </p>
+      <ons-button ng-click="hello.login()">ログイン</ons-button>
+    </section>
+    <section style="margin: 10px;" ng-show="hello.isLoggedIn">
+      <ons-button ng-click="hello.google()">Google連携</ons-button>
+      <ons-button ng-click="hello.logout()">ログアウト</ons-button>
+      
+    </section>
+  </ons-page>
+-->
+
+
+<ons-splitter var="splitter" ng-controller="AppController as app" ng-show=true>  //ここng-showを変化させて、ログイン画面をやる(app.js)
+<ons-splitter-side var="left" side="left" width="150px" collapse swipeable page="view/menu.html">
+</ons-splitter-side>
+<ons-splitter-content var="content" page="tabnav.html">
+</ons-splitter-content>
+</ons-splitter>
+
+<ons-template id="tabnav.html">
+<ons-navigator var="tabNavigator" page="tabbar.html" ng-controller="TabController as tab">
+</ons-navigator> 
+</ons-template>
+
+<ons-template id="tabbar.html">
+    <ons-tabbar var="tabbar">
+        <ons-tab page="view/kintai.html" label="勤怠管理" icon="ion-chatbox-working" active="true"></ons-tab>
+        <ons-tab page="view/calendar.html" label="カレンダー" icon="ion-ios-pricetag"></ons-tab>
+        <ons-tab page="view/itiran.html" label="勤怠一覧" icon="ion-home"></ons-tab>
+    </ons-tab>
+  </ons-tabbar>
+</ons-template>
+
+</body>
+</html>
