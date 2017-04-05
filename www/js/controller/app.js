@@ -90,7 +90,7 @@ myapp.controller('AppController', ['$scope', '$interval', 'googleLogin', 'google
       $scope.splitter.left.close();
       firebase.auth().signOut();
     };
-    /*
+    
     ons.ready(function() {
         // console.log("googleLogin = " + googleLogin);
         
@@ -99,7 +99,7 @@ myapp.controller('AppController', ['$scope', '$interval', 'googleLogin', 'google
           if (user) {
             console.log("login uid = " + user.uid);
             // ホーム画面に遷移
-            $scope.splitter.content.load('view/home.html');
+            $scope.splitter.content.load('view/kintai.html');
           } else {
             console.log("not logged in.");
             // ログイン画面に遷移
@@ -108,6 +108,6 @@ myapp.controller('AppController', ['$scope', '$interval', 'googleLogin', 'google
         });
         console.log("AppController is ready!");
     });
-    */
+    
 }]);
 
