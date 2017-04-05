@@ -14,6 +14,9 @@
     </div>
   </ons-toolbar>
         <ons-list ng-controller="ProfMenuController as prof">
+          <ons-list-item id="home" ng-click="app.navi('view/kintai.html')" modifier="tappable">
+            ホーム
+          </ons-list-item>
           <ons-list-item id="name" ng-click="show('view/name.html')" modifier="tappable">
             名前
           </ons-list-item>

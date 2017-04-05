@@ -24,14 +24,16 @@
   <script src="js/controller/kintai.js"></script>
   <script src="js/controller/settings.js"></script>
   <script src="js/controller/about.js"></script>
-  <script src="js/controller/index.js"></script>
+  <script src="js/controller/login.js"></script>
+  <script src="js/angular-googleapi.js"></script>
+  <script src="https://apis.google.com/js/client.js"></script>
     
 </head>
 
 <body ng-controller="AppController as app">
 
 
-<ons-splitter var="splitter"  >  
+<ons-splitter var="splitter">  
 <!--
 非ログイン時、false,ログイン時trueにして切り替えたい、
 menu.htmlにappコントローラを記述しているがそれでは動かないのでこっちにも書いている-->

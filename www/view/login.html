@@ -1,33 +1,26 @@
-<ons-page ng-controller="HelloController as hello"><!--ここng-showを変化させて、ログイン画面をやる(app.js)-->
-    <ons-toolbar>
-      <div class="center">ログイン</div>
-    </ons-toolbar>
-    <section style="margin: 10px;" ng-hide="hello.isLoggedIn">
-      <p>メールアドレス</p>
-      <p>
-        <ons-input modifier="underbar" ng-model="hello.newMail" placeholder="メールアドレス" float></ons-input>
-      </p>
-      <p>パスワード</p>
-      <p>
-        <ons-input modifier="underbar" ng-model="hello.newPassword" placeholder="password" type="password" float></ons-input>
-      </p>
-      <ons-button ng-click="hello.regi()">新規登録</ons-button>
-    </section>
-    <section style="margin: 10px;" ng-hide="hello.isLoggedIn">
-      <p>メールアドレス</p>
-      <p>
-        <ons-input modifier="underbar" ng-model="hello.mail" placeholder="メールアドレス" float></ons-input>
-      </p>
-      <p>パスワード</p>
-      <p>
-        <ons-input modifier="underbar" ng-model="hello.password" placeholder="password" type="password" float></ons-input>
-      </p>
-      <ons-button ng-click="hello.login()">ログイン</ons-button>
-    </section>
-    <section style="margin: 10px;" ng-show="hello.isLoggedIn">
-      <!--
-      <ons-button ng-click="hello.google()">Google連携</ons-button>
-      <ons-button ng-click="hello.logout()">ログアウト</ons-button>
-      -->
-    </section>
-  </ons-page>
+<ons-page ng-controller="LoginController as login">
+
+  <ons-toolbar>
+    <div class="center">ログイン</div>
+  </ons-toolbar>
+  <p></p>
+
+  <ons-list>
+    <ons-list-item>
+      メールアドレス
+    </ons-list-item>
+    <ons-list-item>
+        <ons-input modifier="underbar" ng-model="login.mail" placeholder="メールアドレス" float></ons-input>@ef-4.co.jp
+    </ons-list-item>
+    <ons-list-item>
+      パスワード
+    </ons-list-item>
+    <ons-list-item>
+        <ons-input modifier="underbar" ng-model="login.password" placeholder="password" type="password" float></ons-input>
+    </ons-list-item>
+    <ons-list-item>
+    <ons-button modifier="large" ng-click="login.login()">ログイン</ons-button>
+    </ons-list-item>
+  </ons-list>
+
+</ons-page>
