@@ -1,7 +1,7 @@
 myapp.controller('CalendarController', function($scope) {
     
-    ons.ready(function() {
+    //ons.ready(function() {
         console.log("CalendarController is ready!");
-    });
+    //});
     
 });

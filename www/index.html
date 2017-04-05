@@ -19,52 +19,23 @@
   <script src="js/app.js"></script>
   <script src="js/controller/app.js"></script>
   <script src="js/controller/tab.js"></script>
-  <script src="js/controller/home.js"></script>
+  <script src="js/controller/prof_menu.js"></script>
   <script src="js/controller/calendar.js"></script>
   <script src="js/controller/kintai.js"></script>
   <script src="js/controller/settings.js"></script>
   <script src="js/controller/about.js"></script>
+  <script src="js/controller/index.js"></script>
     
 </head>
 
 <body>
+
+
+<ons-splitter var="splitter" ng-controller="AppController as app" >  
 <!--
-<ons-page ng-controller="HelloController as hello" ng-show=false>
-    <ons-toolbar>
-      <div class="center">ログイン</div>
-    </ons-toolbar>
-    <section style="margin: 10px;" ng-hide="hello.isLoggedIn">
-      <p>メールアドレス</p>
-      <p>
-        <ons-input modifier="underbar" ng-model="hello.newMail" placeholder="メールアドレス" float></ons-input>
-      </p>
-      <p>パスワード</p>
-      <p>
-        <ons-input modifier="underbar" ng-model="hello.newPassword" placeholder="password" type="password" float></ons-input>
-      </p>
-      <ons-button ng-click="hello.regi()">新規登録</ons-button>
-    </section>
-    <section style="margin: 10px;" ng-hide="hello.isLoggedIn">
-      <p>メールアドレス</p>
-      <p>
-        <ons-input modifier="underbar" ng-model="hello.mail" placeholder="メールアドレス" float></ons-input>
-      </p>
-      <p>パスワード</p>
-      <p>
-        <ons-input modifier="underbar" ng-model="hello.password" placeholder="password" type="password" float></ons-input>
-      </p>
-      <ons-button ng-click="hello.login()">ログイン</ons-button>
-    </section>
-    <section style="margin: 10px;" ng-show="hello.isLoggedIn">
-      <ons-button ng-click="hello.google()">Google連携</ons-button>
-      <ons-button ng-click="hello.logout()">ログアウト</ons-button>
-      
-    </section>
-  </ons-page>
--->
+非ログイン時、false,ログイン時trueにして切り替えたい、
+menu.htmlにappコントローラを記述しているがそれでは動かないのでこっちにも書いている-->
 
-
-<ons-splitter var="splitter" ng-controller="AppController as app" ng-show=true>  //ここng-showを変化させて、ログイン画面をやる(app.js)
 <ons-splitter-side var="left" side="left" width="150px" collapse swipeable page="view/menu.html">
 </ons-splitter-side>
 <ons-splitter-content var="content" page="tabnav.html">
@@ -84,6 +55,8 @@
     </ons-tab>
   </ons-tabbar>
 </ons-template>
+
+
 
 </body>
 </html>

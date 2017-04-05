@@ -1,21 +1,24 @@
-<ons-page>
-  <ons-toolbar>
-    <div class="left">
-      <ons-toolbar-button ng-click="app.toggle()">
-        <ons-icon icon="md-menu"></ons-icon>
-      </ons-toolbar-button>
-    </div>
-    <div class="center">
-      勤怠一覧
-    </div>
-  </ons-toolbar>
-    <div class="contents">
-        <ons-button ng-click="modalShow()">show</ons-button>
-        <ons-button ng-click="modalToggle()">toggle</ons-button>
+<ons-template id="name.html">
+  <ons-dialog style="height: 160px;" var="naviDialog" cancelable>
 
-        <ons-modal var="modal">
-            <div>モーダル内容</div>
-            <ons-button ng-click="modalHide()">hide</ons-button>
-        </ons-modal>
-    </div>
-</ons-page>
+    <ons-navigator var="myNav">
+      <ons-toolbar inline>
+        <div class="center">
+          Navigator
+        </div>
+      </ons-toolbar>
+
+      <div style="text-align: center">
+        <p>
+          This is a dialog with a navigator.
+        </p>
+
+        <p>
+          <ons-button onclick="naviDialog.hide()">Close</ons-button>
+          <ons-button onclick="myNav.pushPage('next.html')">Next</ons-button>
+        </p>
+      </div>
+    </ons-navigator>
+  </ons-dialog>
+</ons-template>
+

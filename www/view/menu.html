@@ -7,14 +7,14 @@
   </ons-list>
 </ons-page>
 -->
-<ons-page>
+<ons-page >
   <ons-toolbar>
     <div class="center">
           プロフィール
     </div>
   </ons-toolbar>
-        <ons-list>
-          <ons-list-item id="name" ng-click="app.navi('view/name.html')" tappable>
+        <ons-list　ng-controller="ProfMenuController as prof">
+          <ons-list-item id="name" ng-click="prof.show('view/name.html')" modifier="tappable">
             名前
           </ons-list-item>
           <ons-list-item id="birthday" ng-click="app.navi('view/birthday.html')" tappable>
