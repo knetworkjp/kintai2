@@ -99,7 +99,7 @@ myapp.controller('AppController', ['$scope', '$interval', 'googleLogin', 'google
           if (user) {
             console.log("login uid = " + user.uid);
             // ホーム画面に遷移
-            $scope.splitter.content.load('view/kintai.html');
+            $scope.splitter.content.load('index.html');
           } else {
             console.log("not logged in.");
             // ログイン画面に遷移

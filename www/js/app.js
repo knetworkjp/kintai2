@@ -1,4 +1,4 @@
-var myapp = ons.bootstrap(['onsen','googleApi']);
+var myapp = ons.bootstrap("myapp", ['onsen','googleApi']);
 
 // myapp.config(function(googleLoginProvider) {
 //         googleLoginProvider.configure({

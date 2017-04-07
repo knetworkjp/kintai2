@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="css/style.css">
 
   <script src="js/app.js"></script>
+  <script src="js/angular-googleapi.js"></script>
+  <script src="https://apis.google.com/js/client.js"></script>
   <script src="js/controller/app.js"></script>
   <script src="js/controller/tab.js"></script>
   <script src="js/controller/prof_menu.js"></script>
@@ -25,8 +27,7 @@
   <script src="js/controller/settings.js"></script>
   <script src="js/controller/about.js"></script>
   <script src="js/controller/login.js"></script>
-  <script src="js/angular-googleapi.js"></script>
-  <script src="https://apis.google.com/js/client.js"></script>
+  <script src="js/controller/name.js"></script>
     
 </head>
 
@@ -34,9 +35,7 @@
 
 
 <ons-splitter var="splitter">  
-<!--
-非ログイン時、false,ログイン時trueにして切り替えたい、
-menu.htmlにappコントローラを記述しているがそれでは動かないのでこっちにも書いている-->
+
 
 <ons-splitter-side var="left" side="left" width="150px" collapse swipeable page="view/menu.html">
 </ons-splitter-side>
