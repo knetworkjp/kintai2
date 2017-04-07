@@ -1,4 +1,3 @@
-// This is a JavaScript file
 angular.module('googleApi', [])
 
     .value('version', '0.1')
@@ -79,62 +78,4 @@ angular.module('googleApi', [])
         };
     })
 
-    .service("googleCalendar", function(googleApiBuilder, $rootScope) {
-
-        var self = this;
-        var itemExtractor = function(resp) { 
-            return resp.items; 
-        };
-
-        googleApiBuilder.afterClientLoaded(function() {
-            gapi.client.load('calendar', 'v3', function() {
-
-                self.listCalendarColors = googleApiBuilder.build(gapi.client.calendar.colors.get);
-
-                self.createEvent = googleApiBuilder.build(gapi.client.calendar.events.quickAdd);
-                self.deleteEvent = googleApiBuilder.build(gapi.client.calendar.events.delete);
-                self.updateEvent = googleApiBuilder.build(gapi.client.calendar.events.update);
-                self.listEvents = googleApiBuilder.build(gapi.client.calendar.events.list, itemExtractor);
-
-                self.createCalendar = googleApiBuilder.build(gapi.client.calendar.calendars.insert);
-                self.deleteCalendar = googleApiBuilder.build(gapi.client.calendar.calendars.delete);
-                self.updateCalendar = googleApiBuilder.build(gapi.client.calendar.calendars.update);
-                self.listCalendars = googleApiBuilder.build(gapi.client.calendar.calendarList.list, itemExtractor);
-                var list = self.listCalendars();
-                self.listCalendars().then(function(response) {
-                     console.log(response);
-                });
-                $rootScope.$broadcast("googleCalendar:loaded")
-            });
-        });
-        
-        this.getList = function() {
-            gapi.client.load('calendar', 'v3', function() {
-                var listCalendars = googleApiBuilder.build(gapi.client.calendar.calendarList.list, itemExtractor);
-                listCalendars().then(function(response) {
-                    console.log(response);
-                    return response;
-                });
-            });
-        };
-        
-
-    })
-
-    .service("googlePlus", function(googleApiBuilder, $rootScope) {
-
-			var self = this;
-			var itemExtractor = function(resp) { return resp.items; };
-
-			googleApiBuilder.afterClientLoaded(function() {
-					gapi.client.load('plus', 'v1', function() {
-						self.getPeople = googleApiBuilder.build(gapi.client.plus.people.get);
-						self.getCurrentUser = function() {
-                            var user = self.getPeople({userId: "me"});
-							return user;
-						}
-						$rootScope.$broadcast("googlePlus:loaded")
-					});
-			});
-
-	})
+    

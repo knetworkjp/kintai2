@@ -1,5 +1,5 @@
 // This is a JavaScript file
-myapp.controller('LoginController', ['$scope', 'googleLogin', 'googleCalendar', 'googlePlus', function($scope, googleLogin, googleCalendar, googlePlus) {
+myapp.controller('LoginController', ['$scope', 'googleLogin', function($scope, googleLogin) {
 
     this.newMail;
     this.newPassword;
