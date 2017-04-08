@@ -34,12 +34,14 @@ myapp.controller('AppController', ['$scope', '$interval', 'googleLogin', functio
             console.log("login uid = " + user.uid);
             // ホーム画面に遷移
             //$scope.splitter.content.load('index.html');
-            $scope.loggedin = true
+            $scope.loggedin = true;
+            console.log("loggedin=" + $scope.loggedin)
           } else {
             console.log("not logged in.");
             // ログイン画面に遷移
             //$scope.splitter.content.load('view/login.html');
-            $scope.loggedin = false
+            $scope.loggedin = false;
+            console.log("loggedin=" + $scope.loggedin)
           } 
         });
         console.log("AppController is ready!");

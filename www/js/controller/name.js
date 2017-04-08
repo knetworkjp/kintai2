@@ -8,10 +8,13 @@ myapp.controller('NameController', function($scope, $http) {
                         Employee_ID:"1",
         }
         console.log("start ajax!")
-        var url = "http://labo.ef-4.co.jp/deepblue/kintaiApp/profile_call_name/" + '&callback=JSON_CALLBACK';
+        var url = "http://labo.ef-4.co.jp/deepblue/kintaiApp/profile_call_name/";
          $http({method: 'POST',
                url:url,
-               params: parameter}
+               parameter:{
+                        "Employee_ID":"1",
+        }
+               }
           ).
           success(function(status, headers, config) {
              console.log(date); 
