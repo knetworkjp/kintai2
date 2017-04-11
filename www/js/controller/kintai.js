@@ -35,21 +35,21 @@ myapp.controller('KintaiController', function($scope) {
         if(!isTouch.syusya && e == 1){ // '出社'ボタンが初めて押されたとき
             
             /* 現在時刻分バーを進める */
-            var date_obj = new Date();
+            var date_obj = new Date(); // 現在の時間を取得して、その分バーを白で塗りつぶす
             var sec = date_obj.getHours()*60*60+date_obj.getMinutes()*60+date_obj.getSeconds();
             start_time = sec;
             bar_data.value.push(sec);
             bar_data.color.push("White");
             bar_data.all -= sec;
             
-            this.setText("syusya","出社時間を変更");
+            this.setText("syusya","出社時間を変更");　// 出社ボタンのテキストを変更
             this.updateBreakdown();
             isTouch.syusya = true;
             bar_data.value.push(0);
             bar_data.color.push("Yellow");
             stop_flag.work[0] = false;
             this.updateBar(stop_flag.work);
-        }else if(isTouch.syusya && !isTouch.kyukei && !isTouch.taisya && e == 2){
+        }else if(isTouch.syusya && !isTouch.kyukei && !isTouch.taisya && e == 2){ // 休憩ボタンが押された時
             this.setText("kyukei","休憩をやめる");
             isTouch.kyukei = true;
             bar_data.value.push(0);
@@ -57,7 +57,7 @@ myapp.controller('KintaiController', function($scope) {
             stop_flag.work[0] = true;
             stop_flag.break[0] = false;
             this.updateBar(stop_flag.break);
-        }else if(isTouch.syusya && isTouch.kyukei && !isTouch.taisya && e == 2){
+        }else if(isTouch.syusya && isTouch.kyukei && !isTouch.taisya && e == 2){ // 休憩をやめるボタンが押された時
             this.setText("kyukei","休憩");
             isTouch.kyukei = false;
             bar_data.value.push(0);
@@ -65,11 +65,28 @@ myapp.controller('KintaiController', function($scope) {
             stop_flag.work[0] = false;
             stop_flag.break[0] = true;
             this.updateBar(stop_flag.work);
-        }else if(isTouch.syusya && !isTouch.taisya && e == 3){
+        }else if(isTouch.syusya && !isTouch.taisya && e == 3){ // 退社ボタンが押された時
+            this.setText("taisya","退社時間を変更");
+            this.setText("kyukei","休憩時間を変更");
             isTouch.taisya = true;
             stop_flag.work[0] =  stop_flag.break[0] = true;
         }else if(isTouch.syusya && e == 1){
             // '出社時間を変更'ボタンが押されたときの処理
+            // ダイアログ出したい APIで取得した時間帯をプルダウンで選択
+            isTouch.syusya = true;
+        
+        }else if(isTouch.kyukei && e == 2){
+            // '休憩時間を変更'ボタンが押された時の処理
+            // ダイアログ出したい APIで取得した時間帯をプルダウンで選択
+            
+        }else if(isTouch.taisya && e == 3){
+            // '退社時間を変更'ボタンが押された時の処理
+            // ダイアログ出したい APIで取得した時間帯をプルダウンで選択
+            
+        }else if(isTouch.teisyutu && e == 4){
+            // '提出'ボタンが押された時の処理
+            // ダイアログで注意文表示 APIでデータを登録
+            
         }else{
             
         }

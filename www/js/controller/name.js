@@ -8,21 +8,28 @@ myapp.controller('NameController', function($scope, $http) {
                         Employee_ID:"1",
         }
         console.log("start ajax!")
-        var url = "http://labo.ef-4.co.jp/deepblue/kintaiApp/profile_call_name/";
-         $http({method: 'POST',
+        var url = "https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_call_name/";
+         $http({//withCredentials: true,
+             method: 'POST',
                url:url,
-               parameter:{
+               data:{
                         "Employee_ID":"1",
         }
                }
           ).
-          success(function(status, headers, config) {
-             console.log(date); 
+          success(function(data) {
+             console.log(data); 
+             //console.log(status);
+             //console.log(headers);
              console.log("ajax successed"); 
              $scope.resultajax="success";
+             console.log(data.Namae);
+             $scope.preusername = data
           }).
           error(function(data, status, headers, config) {
              console.log(status);
+             console.log(data);
+             console.log(headers);
              console.log("ajax failed");
              $scope.resultajax="failed";
           });

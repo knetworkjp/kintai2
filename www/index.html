@@ -30,6 +30,8 @@
   <script src="js/controller/about.js"></script>
   <script src="js/controller/login.js"></script>
   <script src="js/controller/name.js"></script>
+  <script src="js/controller/itiran.js"></script><!--Add.naka-->
+
     
 </head>
 
@@ -39,9 +41,9 @@
 <ons-splitter var="splitter">  
 
 
-<ons-splitter-side var="left" side="left" width="150px" collapse swipeable page="view/menu.html">
+<ons-splitter-side var="left" side="left" width="150px" collapse swipeable page="view/menu.html"><!--ng-show="app.loggedin"-->
 </ons-splitter-side>
-<ons-splitter-content var="content" page="tabnav.html">
+<ons-splitter-content var="content" page="tabnav.html"><!--ng-show="app.loggedin"-->
 </ons-splitter-content>
 </ons-splitter>
 
@@ -59,7 +61,7 @@
   </ons-tabbar>
 </ons-template>
 
-<ons-template id="login.html" page="view/login.html">
+<ons-template id="login.html" page="view/login.html"><!-- ng-hide="app.loggedin"-->
     
 </ons-template>
 

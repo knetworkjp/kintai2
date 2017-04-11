@@ -1,4 +1,4 @@
-<ons-page>
+<ons-page ng-controller="ItiranController as itiran">
   <ons-toolbar>
     <div class="left">
       <ons-toolbar-button ng-click="app.toggle()">
@@ -9,4 +9,18 @@
       勤怠一覧
     </div>
   </ons-toolbar>
+    <p style="text-align: light; padding-top: 20px;">
+        【今月の累計】
+    </p>
+    <h4>・勤務時間</h4>
+        <p id = "totalwork"></p>
+        <p id = "overwork"></p>
+    <h4>・休憩時間</h4>
+        <p id = "totalbreak"></p>
+    <h4>・残業時間</h4>
+        <p id = "totalover"></p>
+    <h4>・遅刻回数</h4>
+        <p id = "totallate"></p>
+    <h4>・早退回数</h4>
+        <p id = "totalleaveearly"></p>
 </ons-page>

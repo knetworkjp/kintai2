@@ -1,5 +1,5 @@
 myapp.controller('AppController', ['$scope', '$interval', 'googleLogin', function($scope, $interval, googleLogin, googleCalendar, googlePlus) {
-
+    this.loggedin;
     this.load = function(page) {
         console.log("AppController loading " + page);
         $scope.splitter.content.load(page);
@@ -33,15 +33,15 @@ myapp.controller('AppController', ['$scope', '$interval', 'googleLogin', functio
           if (user) {
             console.log("login uid = " + user.uid);
             // ホーム画面に遷移
-            //$scope.splitter.content.load('index.html');
-            $scope.loggedin = true;
-            console.log("loggedin=" + $scope.loggedin)
+            $scope.splitter.content.load('index.html');
+            this.loggedin = true;
+            console.log("loggedin=" + this.loggedin)
           } else {
             console.log("not logged in.");
             // ログイン画面に遷移
-            //$scope.splitter.content.load('view/login.html');
-            $scope.loggedin = false;
-            console.log("loggedin=" + $scope.loggedin)
+            $scope.splitter.content.load('view/login.html');
+            this.loggedin = false;
+            console.log("loggedin=" + this.loggedin)
           } 
         });
         console.log("AppController is ready!");
