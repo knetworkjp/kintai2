@@ -1,2 +1,10 @@
 /**/
 
+/**/
+#bar-chart-area{
+    border : thin solid #D3D3D3;
+}
+.kintai-btn {
+    width: 60%;
+    margin: 2% 20%;
+}

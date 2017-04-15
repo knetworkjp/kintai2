@@ -38,12 +38,12 @@
 <body ng-controller="AppController as app">
 
 
-<ons-splitter var="splitter">  
+<ons-splitter var="splitter" ng-show="app.isLogin()">  
 
 
-<ons-splitter-side var="left" side="left" width="150px" collapse swipeable page="view/menu.html"><!--ng-show="app.loggedin"-->
+<ons-splitter-side var="left" side="left" width="150px" collapse swipeable page="view/menu.html">
 </ons-splitter-side>
-<ons-splitter-content var="content" page="tabnav.html"><!--ng-show="app.loggedin"-->
+<ons-splitter-content var="content" page="tabnav.html">
 </ons-splitter-content>
 </ons-splitter>
 
@@ -61,11 +61,13 @@
   </ons-tabbar>
 </ons-template>
 
-<ons-template id="login.html" page="view/login.html"><!-- ng-hide="app.loggedin"-->
+<ons-navigator var="loginNavigator" page="view/login.html" ng-hide="app.isLogin()">
+</ons-navigator> 
+
     
 </ons-template>
 
-<!--add.naka-->
+
 
 </body>
 </html>
