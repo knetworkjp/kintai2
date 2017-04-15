@@ -1,12 +1,32 @@
-<ons-page>
-  <ons-toolbar>
-    <div class="left">
-      <ons-toolbar-button ng-click="app.toggle()">
-        <ons-icon icon="md-menu"></ons-icon>
-      </ons-toolbar-button>
+
+<ons-page ng-controller="TeijiController as tj">
+    <ons-toolbar>
+      <div class="left">
+       <ons-toolbar-button ng-click="app.toggle();"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
+      </div>
+      <div class="center">定時の変更</div>
+    </ons-toolbar>
+
+    <!--<p style="padding-top: 100px; color: #999; text-align: center">
+       <h1 ng-controller="NameController as name">{{resultajax}}</h1>
+    </p>
+    <p style="padding-top: 100px; color: #999; text-align: center">
+       <h1 ng-controller="NameController as name">{{preusername}}</h1>
+    </p>
+    -->
+    
+    <div>
+      変更後の定時を入力してください
     </div>
-    <div class="center">
-      定時入力
-    </div>
-  </ons-toolbar>
+    <p>
+      <ons-input id="arrival" ng-model="inputarrival" modifier="underbar" placeholder="{{prearrival}}" float>出社区分</ons-input>
+    </p>
+    <p>
+      <ons-input id="leave" ng-model="inputleave" modifier="underbar" placeholder="{{preleave}}" float>退社区分</ons-input>
+    </p>
+    
+    
+    <button ng-click="tj.click()">
+    変更    
+    </button>
 </ons-page>

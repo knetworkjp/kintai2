@@ -1,12 +1,35 @@
-<ons-page>
-  <ons-toolbar>
-    <div class="left">
-      <ons-toolbar-button ng-click="app.toggle()">
-        <ons-icon icon="md-menu"></ons-icon>
-      </ons-toolbar-button>
+
+<ons-page ng-controller="BirthdayController as bid">
+    <ons-toolbar>
+      <div class="left">
+       <ons-toolbar-button ng-click="app.toggle();"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
+      </div>
+      <div class="center">誕生日の変更</div>
+    </ons-toolbar>
+
+    <!--<p style="padding-top: 100px; color: #999; text-align: center">
+       <h1 ng-controller="NameController as name">{{resultajax}}</h1>
+    </p>
+    <p style="padding-top: 100px; color: #999; text-align: center">
+       <h1 ng-controller="NameController as name">{{preusername}}</h1>
+    </p>
+    -->
+    
+    <div>
+      変更後の誕生日を入力してください
     </div>
-    <div class="center">
-      誕生日入力
-    </div>
-  </ons-toolbar>
+    <p>
+      <ons-input id="year" ng-model="inputyear" modifier="underbar" placeholder="{{preyear}}" float>年</ons-input>
+    </p>
+    <p>
+      <ons-input id="month" ng-model="inputmonth" modifier="underbar" placeholder="{{premonth}}" float>月</ons-input>
+    </p>
+    
+    <p>
+      <ons-input id="day" ng-model="inputday" modifier="underbar" placeholder="{{preday}}" float>日</ons-input>
+    </p>
+    
+    <button ng-click="bid.click()">
+    変更    
+    </button>
 </ons-page>

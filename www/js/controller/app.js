@@ -27,7 +27,8 @@ myapp.controller('AppController', ['$scope', '$interval', 'googleLogin', functio
     
     this.isLogin = function() {
         var user = firebase.auth().currentUser;
-        if(user) {console.log("loggedin");
+        if(user) {//console.log("loggedin");
+            //console.log(user.uid)
             return true;
         } else {console.log("notloggedin")
             return false;

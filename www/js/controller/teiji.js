@@ -1,10 +1,11 @@
-myapp.controller('NameController', function($scope, $http) {
-    $scope.resultajax
-    $scope.inputname
+myapp.controller('TeijiController', function($scope, $http) {
+    $scope.resultajax;
+    $scope.inputarrival;
+    $scope.inputleave;
     
     
     ons.ready(function() {
-        console.log("NameController is ready!");
+        console.log("TeijiController is ready!");
 
         var parameter = {
                         Employee_ID:"1",
@@ -13,10 +14,10 @@ myapp.controller('NameController', function($scope, $http) {
         
          $http({
              method: 'POST',
-               url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_call_name/",
+               url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_call_fixedtime/",
                data:{
                         "Employee_ID":"1",
-        }
+                    }
                }
           ).
           success(function(data) {
@@ -25,8 +26,14 @@ myapp.controller('NameController', function($scope, $http) {
              //console.log(headers);
              console.log("ajax successed"); 
              $scope.resultajax="success";
-             console.log(data.Namae);
-             $scope.preusername = data.Namae
+             //var spbday = data.Birthday.split("-");
+             //var preyear = spbday[0];
+             //var premonth = spbday[1];
+             //var preday = spbday[2];
+             console.log(data);
+             $scope.preyear = preyear;
+             $scope.premonth = premonth;
+             $scope.preday = preday;
           }).
           error(function(data, status, headers, config) {
              console.log(status);
@@ -39,14 +46,14 @@ myapp.controller('NameController', function($scope, $http) {
     
     
     
-    this.click = function(){
-        console.log("inputname = " + $scope.inputname);
-        var inputname = $scope.inputname
+    this.click = function(){        
+        var inputdate = $scope.inputyear + "-" + $scope.inputmonth + "-" + $scope.inputday;
+        console.log(inputdate);
         $http({
              method: 'POST',
-               url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_sub_name/",
+               url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_sub_birthday/",
                data:{
-                        "Employee_ID":"1","Profile_Data_Name_Changed":inputname
+                        "Employee_ID":"1","Profile_Data_Date_Changed":inputdate
         }
                }
           ).
@@ -69,4 +76,8 @@ myapp.controller('NameController', function($scope, $http) {
 });
 
 
-//console.log("NameController is ready!");
+
+
+
+
+

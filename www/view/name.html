@@ -1,47 +1,28 @@
 
 <ons-page ng-controller="NameController as name">
-  <ons-toolbar>
-    <div class="left">
-     <ons-toolbar-button ng-click="app.toggle();"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
-    </div>
-    <div class="center">名前の変更</div>
-  </ons-toolbar>
+    <ons-toolbar>
+      <div class="left">
+       <ons-toolbar-button ng-click="app.toggle();"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
+      </div>
+      <div class="center">名前の変更</div>
+    </ons-toolbar>
 
-  <p style="padding-top: 100px; color: #999; text-align: center">
-     <h1 ng-controller="NameController as name">{{resultajax}}</h1>
-  </p>
-  <p style="padding-top: 100px; color: #999; text-align: center">
-     <h1 ng-controller="NameController as name">{{preusername}}</h1>
-  </p>
-  <p>
-      <ons-input id="username" modifier="underbar" placeholder="{{preusername}}" float></ons-input>
+    <!--<p style="padding-top: 100px; color: #999; text-align: center">
+       <h1 ng-controller="NameController as name">{{resultajax}}</h1>
     </p>
+    <p style="padding-top: 100px; color: #999; text-align: center">
+       <h1 ng-controller="NameController as name">{{preusername}}</h1>
+    </p>
+    -->
+    <div>
+      変更後の名前を入力してください
+    </div>
+    <p>
+      <ons-input id="username" ng-model="inputname" modifier="underbar" placeholder="{{preusername}}" float></ons-input>
+    </p>
+    
+    <button ng-click="name.click()">
+    変更    
+    </button>
 </ons-page>
 
-
-<!--
-<ons-template id="name.html">
-  <ons-dialog style="height: 160px;" var="naviDialog" cancelable>
-
-    <ons-navigator var="myNav">
-      <ons-toolbar inline>
-        <div class="center">
-          Navigator
-        </div>
-      </ons-toolbar>
-
-      <div style="text-align: center">
-        <p>
-          This is a dialog with a navigator.
-        </p>
-
-        <p>
-          <ons-button onclick="naviDialog.hide()">Close</ons-button>
-          <ons-button onclick="myNav.pushPage('next.html')">Next</ons-button>
-        </p>
-      </div>
-    </ons-navigator>
-  </ons-dialog>
-</ons-template>
-
--->
