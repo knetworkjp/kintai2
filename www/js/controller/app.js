@@ -1,5 +1,8 @@
+// controller配下のやつです
 myapp.controller('AppController', ['$scope', '$interval', 'googleLogin', function($scope, $interval, googleLogin, googleCalendar, googlePlus) {
-    
+   
+   this.currentTab = 0;
+   
     this.load = function(page) {
         console.log("AppController loading " + page);
         $scope.splitter.content.load(page);
@@ -27,8 +30,7 @@ myapp.controller('AppController', ['$scope', '$interval', 'googleLogin', functio
     
     this.isLogin = function() {
         var user = firebase.auth().currentUser;
-        if(user) {//console.log("loggedin");
-            //console.log(user.uid)
+        if(user) {console.log("loggedin");
             return true;
         } else {console.log("notloggedin")
             return false;
@@ -62,4 +64,3 @@ myapp.controller('AppController', ['$scope', '$interval', 'googleLogin', functio
     });
     
 }]);
-

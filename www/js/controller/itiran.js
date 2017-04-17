@@ -1,47 +1,92 @@
-myapp.controller('ItiranController', function($scope) {
+myapp.controller('ItiranController', ['$scope','$http',function($scope,$http) {
     
-    // APIで値を取得想定(とりあえずベタ書き)
-    var objRuikei = {'totalWorkdays':'10',
-                    'totalWorktime':'80:00',
-                    'totalBreaktime':'10:00',
-                    'totalOvertime':'00:00',
-                    'totalLate':'0',
-                    'totalLeaveEarly':'0'};
-    console.log(objRuikei); // ログ確認用
+    this.updateTime = 0;
     
-    // 勤務時間を分割
-    var totalworkH = objRuikei["totalWorktime"];
-    time = totalworkH.split(":");
-    console.log(time[0]);  // ログ確認用 
-    // 勤務時間 > 出勤日数*12の場合は注意文表示
-    var totaldays = objRuikei["totalWorkdays"]*12;    
-    var coment = document.getElementById("overwork");
-    if (totaldays <= time[0]) {
-        coment.innerHTML = "働きすぎですよ!!(｀・д・)σﾒｯ!";
-    } else {
-        coment.innerHTML = "お疲れ様です!!";
+    this.showPage = function(currentTab){
+        console.log("ItiranController showPage is called tab = " + currentTab);
+        
+        // 現在のUNIX時間(秒)を取得する
+        var date = new Date();
+        var unixTime = Math.floor( date.getTime() / 1000 ) ;
+        // 一定時間経過していれば更新する
+        if(currentTab == 2 && unixTime - this.updateTime > 180) {
+            console.log("ItiranController update list.");
+            $scope.itiranList();
+            // 更新時刻をセット
+            this.updateTime = unixTime;
+        }
+        
+        // trueを返却する(ng-showの戻り値)
+        return true;
     }
     
-    // 勤務時間表示
-    var totalwork = document.getElementById("totalwork");
-    totalwork.innerHTML = objRuikei["totalWorktime"];
-    
-    // 休憩時間表示
-    var totalbreak = document.getElementById("totalbreak");
-    totalbreak.innerHTML = objRuikei["totalBreaktime"];
-    
-    // 残業時間表示
-    var totalover = document.getElementById("totalover");
-    totalover.innerHTML = objRuikei["totalOvertime"];
-    
-    // 遅刻回数表示
-    var totallate = document.getElementById("totallate");
-    totallate.innerHTML = objRuikei["totalLate"];
-    
-    // 早退回数表示
-    var totalleaveearly = document.getElementById("totalleaveearly");
-    totalleaveearly.innerHTML = objRuikei["totalLeaveEarly"];
-    
-  });
+    $scope.itiranList = function(){
+        /*
+        //APIで値を取得
+        console.log("ruikeiData start ajax!");
+        var url = "https://labo.ef-4.co.jp/deepblue/kintaiApp/kintai_ruikei/";
+        $http({
+                method: 'POST',
+                url:url,
+                data:{ // とりあえずベタ書き
+                    "Employee_ID":"1",
+                    "Month":"2017-04-15 10:00:00"
+                }
+        })
+        .success(function(data) {
+            console.log(data);
+            console.log("ajax successed"); 
+            $scope.resultajax="success";
+            // $scope.preusername = data;
+        })
+        .error(function(data, status, headers, config) {
+            console.log(status);
+            console.log(data);
+            console.log(headers);
+            console.log("ajax failed");
+            $scope.resultajax="failed";
+        });
+        */
+        
+        // APIで値を取得想定(とりあえずベタ書き)
+        var objRuikei = {'totalWorkdays':'10',
+                        'totalWorktime':'120:00',
+                        'totalBreaktime':'10:00',
+                        'totalOvertime':'00:00',
+                        'totalLate':'0',
+                        'totalLeaveEarly':'0'};
+        //console.log(objRuikei);
+        
+        
+        //勤務時間を分割
+        var totalworkH = objRuikei.totalWorktime;
+        time = totalworkH.split(":");
 
-
+        // 勤務時間 > 出勤日数*12の場合は注意文表示
+        var totaldays = objRuikei.totalWorkdays*12;
+        var comment = "";
+        var classname = "";
+        if (totaldays <= time[0]) {
+            comment = "働きすぎですよ!!(｀・д・)σﾒｯ!";
+            classname = "over";
+        } else {
+            classname = "default";
+        }
+        
+        $scope.totalWorkdays = objRuikei.totalWorkdays;
+        $scope.totalWorktime = objRuikei.totalWorktime;
+        $scope.overWorkComment = comment;
+        $scope.className = classname;
+        $scope.totalBreaktime = objRuikei.totalBreaktime;
+        $scope.totalOvertime = objRuikei.totalOvertime;
+        $scope.totalLate = objRuikei.totalLate;
+        $scope.totalLeaveEarly = objRuikei.totalLeaveEarly;
+        
+    }
+    
+    
+    ons.ready(function() {
+        $scope.itiranList();
+        console.log("IchiranController is ready!");
+    });
+}]);

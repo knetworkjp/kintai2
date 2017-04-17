@@ -8,3 +8,12 @@
     width: 60%;
     margin: 2% 20%;
 }
+
+.over{
+    background-color: #F00;
+    color: #FFF;
+}
+
+.default{
+    background-color: #FFF;
+}
