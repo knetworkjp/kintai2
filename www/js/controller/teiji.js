@@ -12,29 +12,28 @@ myapp.controller('TeijiController', function($scope, $http) {
         }
         console.log("start ajax!")
         
-         $http({
-             method: 'POST',
-               url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_call_fixedtime/",
-               data:{
-                        "Employee_ID":"1",
-                    }
-               }
-          ).
-          success(function(data) {
-             console.log(data); 
-             //console.log(status);
-             //console.log(headers);
-             console.log("ajax successed"); 
-             $scope.resultajax="success";
-             //var spbday = data.Birthday.split("-");
-             //var preyear = spbday[0];
-             //var premonth = spbday[1];
-             //var preday = spbday[2];
-             console.log(data);
-             $scope.preyear = preyear;
-             $scope.premonth = premonth;
-             $scope.preday = preday;
-          }).
+        $http({
+         method: 'POST',
+           url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_call_fixetime/",
+           data:{
+                    "Employee_ID":"1",
+                }
+           }
+        ).
+        success(function(data) {
+            console.log(data); 
+            //console.log(status);
+            //console.log(headers);
+            console.log("ajax successed"); 
+            $scope.resultajax="success";
+            //var premonth = spbday[1];
+            //var preday = spbday[2];
+            console.log(data);
+            var prearrival = data.Fixe_Time_start
+            var preleave = data.Fixe_Time_end
+            $scope.prearrival = prearrival;
+            $scope.preleave = preleave;
+        }).
           error(function(data, status, headers, config) {
              console.log(status);
              console.log(data);
@@ -47,13 +46,15 @@ myapp.controller('TeijiController', function($scope, $http) {
     
     
     this.click = function(){        
-        var inputdate = $scope.inputyear + "-" + $scope.inputmonth + "-" + $scope.inputday;
-        console.log(inputdate);
+        var inputarrival = $scope.inputarrival;
+        var inputleave = $scope.inputleave;
+        console.log("inputarrival=" + inputarrival + " inputleave=" + inputleave);
         $http({
              method: 'POST',
-               url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_sub_birthday/",
+               url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_sub_fixedtime/",
                data:{
-                        "Employee_ID":"1","Profile_Data_Date_Changed":inputdate
+                        "Employee_ID":"1","Profile_Data_Arrival":inputarrival,
+                        "Profile_Data_Clock-out":inputleave
         }
                }
           ).
