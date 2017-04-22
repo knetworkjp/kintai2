@@ -7,16 +7,13 @@ myapp.controller('BirthdayController', function($scope, $http) {
     ons.ready(function() {
         console.log("BirthdayController is ready!");
 
-        var parameter = {
-                        Employee_ID:"1",
-        }
         console.log("start ajax!")
-        
+        console.log("user_uid = " + $scope.user_uid);
          $http({
              method: 'POST',
                url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_call_birthday/",
                data:{
-                        "Employee_ID":"1",
+                        "Employee_ID":$scope.user_uid,
                     }
                }
           ).
@@ -53,7 +50,7 @@ myapp.controller('BirthdayController', function($scope, $http) {
              method: 'POST',
                url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_sub_birthday/",
                data:{
-                        "Employee_ID":"1","Profile_Data_Date_Changed":inputdate
+                        "Employee_ID":$scope.user_uid,"Profile_Data_Date_Changed":inputdate
         }
                }
           ).
@@ -63,14 +60,22 @@ myapp.controller('BirthdayController', function($scope, $http) {
              //console.log(headers);
              console.log("ajax successed"); 
              console.log(data);
+             $scope.resultajax="変更に成功しました。";
+             console.log("resultajax=" + $scope.resultajax);
+             ons.createDialog('view/d_birthday.html', {parentScope: $scope}).then(function(dialog) {
+                dialog.show();
+            });
           }).
           error(function(data, status, headers, config) {
              console.log(status);
              console.log(data);
              console.log(headers);
-             console.log("ajax failed");
-             $scope.resultajax="failed";
-          });
+             $scope.resultajax="変更に失敗しました。もう一度お試しください。";
+             console.log("resultajax=" + $scope.resultajax);
+             ons.createDialog('view/d_birthday.html', {parentScope: $scope}).then(function(dialog) {
+                dialog.show();
+            });
+        });
     };
     
 });
