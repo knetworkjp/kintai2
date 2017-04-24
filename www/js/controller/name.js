@@ -10,28 +10,30 @@ myapp.controller('NameController', function($scope, $http) {
         console.log("NameController is ready!");
 
         var parameter = {
-                        Employee_ID:"1",
+            Employee_ID:"1",
         }
         console.log("start ajax!");
         //console.log("user_uid = " + $scope.user_uid);
         
-         $http({
-             method: 'POST',
-               url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_call_name/",
-               data:{
-                        "Employee_ID":$scope.user_uid,
-        }
-               }
-          ).
-          success(function(data) {
-             console.log(data); 
-             //console.log(status);
-             //console.log(headers);
-             console.log("ajax successed"); 
-             $scope.resultajax="success";
-             var prenamae = data.Namae;
-             console.log(prenamae);
-             $scope.preusername = prenamae;
+        $http({
+            method: 'POST',
+            url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_call_name/",
+            data:{
+                "Employee_ID":$scope.user_uid,
+            }
+        }).
+        success(function(data) {
+            console.log(data); 
+            //console.log(status);
+            //console.log(headers);
+            console.log("ajax successed"); 
+            $scope.resultajax="success";
+            var prenamae = data.Namae;
+            console.log(prenamae);
+            //$scope.$apply(function () {
+                $scope.preusername = prenamae;
+            //});
+             
           }).
           error(function(data, status, headers, config) {
              console.log(status);

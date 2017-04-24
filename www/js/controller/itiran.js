@@ -21,23 +21,42 @@ myapp.controller('ItiranController', ['$scope','$http',function($scope,$http) {
     }
     
     $scope.itiranList = function(){
-        /*
+        
+        var user = firebase.auth().currentUser; // 現在ログインしているユーザを取得
+        var usercode;
+        if (user != null) {
+            usercode = user.uid; // Firebaseのuser_uidを取得
+        }
+        console.log('GET user_uid = ' + usercode);
+        
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = now.getMonth()+1;
+        var yyyymm = year+'-'+month;
+        console.log(yyyymm);
+        
         //APIで値を取得
         console.log("ruikeiData start ajax!");
-        var url = "https://labo.ef-4.co.jp/deepblue/kintaiApp/kintai_ruikei/";
+        var parameter = {
+            Employee_ID:usercode,
+            Month:yyyymm
+        }
+        console.log('!start!=' + JSON.stringify(parameter));
+        
         $http({
-                method: 'POST',
-                url:url,
-                data:{ // とりあえずベタ書き
-                    "Employee_ID":"1",
-                    "Month":"2017-04-15 10:00:00"
-                }
+            method:'POST',
+            url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/kintai_ruikei/",
+            data:{
+                "Employee_ID":usercode,
+                "Month":yyyymm
+            }
         })
         .success(function(data) {
             console.log(data);
             console.log("ajax successed"); 
             $scope.resultajax="success";
-            // $scope.preusername = data;
+            var objRuikei = data;
+            console.log(objRuikei);
         })
         .error(function(data, status, headers, config) {
             console.log(status);
@@ -46,21 +65,22 @@ myapp.controller('ItiranController', ['$scope','$http',function($scope,$http) {
             console.log("ajax failed");
             $scope.resultajax="failed";
         });
-        */
         
+        /*
         // APIで値を取得想定(とりあえずベタ書き)
         var objRuikei = {'totalWorkdays':'10',
-                        'totalWorktime':'120:00',
-                        'totalBreaktime':'10:00',
+                        'totalWorktime':'120.0',
+                        'totalBreaktime':'100',
                         'totalOvertime':'00:00',
                         'totalLate':'0',
                         'totalLeaveEarly':'0'};
         //console.log(objRuikei);
-        
+        */
         
         //勤務時間を分割
         var totalworkH = objRuikei.totalWorktime;
-        time = totalworkH.split(":");
+        time = totalworkH.split(":"); //n:nn
+        //time = Math.floor(totalworkH); //n.n
 
         // 勤務時間 > 出勤日数*12の場合は注意文表示
         var totaldays = objRuikei.totalWorkdays*12;
@@ -83,8 +103,7 @@ myapp.controller('ItiranController', ['$scope','$http',function($scope,$http) {
         $scope.totalLeaveEarly = objRuikei.totalLeaveEarly;
         
     }
-    
-    
+
     ons.ready(function() {
         $scope.itiranList();
         console.log("IchiranController is ready!");
