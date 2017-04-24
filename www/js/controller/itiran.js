@@ -56,7 +56,33 @@ myapp.controller('ItiranController', ['$scope','$http',function($scope,$http) {
             console.log("ajax successed"); 
             $scope.resultajax="success";
             var objRuikei = data;
-            console.log(objRuikei);
+            console.log('objRuikei='+JSON.stringify(objRuikei));
+            
+            //勤務時間を分割
+            var totalworkH = objRuikei.totalWorktime;
+            //time = totalworkH.split(":"); //n:nn
+            time = Math.floor(totalworkH); //n.n
+
+         // 勤務時間 > 出勤日数*12の場合は注意文表示
+         var totaldays = objRuikei.totalWorkdays*12;
+         var comment = "";
+         var classname = "";
+         if (totaldays <= time[0]) {
+                comment = "働きすぎですよ!!(｀・д・)σﾒｯ!";
+                classname = "over";
+            } else {
+                classname = "default";
+            }
+        
+            $scope.totalWorkdays = objRuikei.totalWorkdays;
+            $scope.totalWorktime = objRuikei.totalWorktime;
+            $scope.overWorkComment = comment;
+            $scope.className = classname;
+            $scope.totalBreaktime = objRuikei.totalBreaktime;
+            $scope.totalOvertime = objRuikei.totalOvertime;
+            $scope.totalLate = objRuikei.totalLate;
+            $scope.totalLeaveEarly = objRuikei.totalLeaveEarly;
+        
         })
         .error(function(data, status, headers, config) {
             console.log(status);
@@ -65,43 +91,6 @@ myapp.controller('ItiranController', ['$scope','$http',function($scope,$http) {
             console.log("ajax failed");
             $scope.resultajax="failed";
         });
-        
-        /*
-        // APIで値を取得想定(とりあえずベタ書き)
-        var objRuikei = {'totalWorkdays':'10',
-                        'totalWorktime':'120.0',
-                        'totalBreaktime':'100',
-                        'totalOvertime':'00:00',
-                        'totalLate':'0',
-                        'totalLeaveEarly':'0'};
-        //console.log(objRuikei);
-        */
-        
-        //勤務時間を分割
-        var totalworkH = objRuikei.totalWorktime;
-        time = totalworkH.split(":"); //n:nn
-        //time = Math.floor(totalworkH); //n.n
-
-        // 勤務時間 > 出勤日数*12の場合は注意文表示
-        var totaldays = objRuikei.totalWorkdays*12;
-        var comment = "";
-        var classname = "";
-        if (totaldays <= time[0]) {
-            comment = "働きすぎですよ!!(｀・д・)σﾒｯ!";
-            classname = "over";
-        } else {
-            classname = "default";
-        }
-        
-        $scope.totalWorkdays = objRuikei.totalWorkdays;
-        $scope.totalWorktime = objRuikei.totalWorktime;
-        $scope.overWorkComment = comment;
-        $scope.className = classname;
-        $scope.totalBreaktime = objRuikei.totalBreaktime;
-        $scope.totalOvertime = objRuikei.totalOvertime;
-        $scope.totalLate = objRuikei.totalLate;
-        $scope.totalLeaveEarly = objRuikei.totalLeaveEarly;
-        
     }
 
     ons.ready(function() {

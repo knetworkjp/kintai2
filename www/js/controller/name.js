@@ -13,7 +13,7 @@ myapp.controller('NameController', function($scope, $http) {
             Employee_ID:"1",
         }
         console.log("start ajax!");
-        //console.log("user_uid = " + $scope.user_uid);
+        console.log("user_uid = " + $scope.user_uid);
         
         $http({
             method: 'POST',

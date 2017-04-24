@@ -1,5 +1,6 @@
 'use strict'
-myapp.controller('KintaiController', function($scope) {
+var app = angular.module('app', []);
+myapp.controller('KintaiController', function($scope, $http) {
 
     /* 初期化 */
     let stop_flag = {'work':[true],'break':[true]}; // バーを止めるのに使うflag
@@ -14,7 +15,7 @@ myapp.controller('KintaiController', function($scope) {
         value[i]=偶数:休憩時間
 
         [10000,100,10,1......]    : [10000スタート、100働く、10休む,1働く.....]
-        
+
 
         valueは勤務時間や休憩時間の値がそれぞれ秒単位で保存される。
         bar_data.value[i]でi=0とiが最後のインデックスの場合はバーを描くため(白く塗る)の値が
@@ -55,6 +56,27 @@ myapp.controller('KintaiController', function($scope) {
             bar_data.color.push("Yellow");
             stop_flag.work[0] = false;
             this.updateBar(stop_flag.work);
+
+            console.log("user_uid = " + $scope.user_uid);
+            console.log("!start kintai ajax!")
+            $http({
+                method: 'POST',
+                  url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/arrival/",
+                  data:{
+                           "Employee_ID":$scope.user_uid,"Arrival_Time":"2017-04-24,00:00"
+                       }
+                  }
+             ).
+             success(function(data) {
+                console.log(data);
+                console.log("kintai ajax successed");
+             }).
+             error(function(data, status, headers, config) {
+                console.log(status);
+                console.log(data);
+                console.log(headers);
+                console.log("ajax failed");
+             });
         }else if(isTouch.syusya && !isTouch.kyukei && !isTouch.taisya && e == 2){ // 休憩ボタンが押された時
             this.setText("kyukei","休憩をやめる");
             isTouch.kyukei = true;
@@ -188,8 +210,9 @@ myapp.controller('KintaiController', function($scope) {
             popover.show("#"+ button);
         });
     };
-
-
+    ons.ready(function() {
+        console.log("Onsen UI is ready!");
+    });
 });
 
 myapp.controller('PopCloseController', function($scope) {
@@ -209,47 +232,10 @@ myapp.controller('PopCloseController', function($scope) {
         $scope.data.secOptions.push({id:i,name:i});
     }
     this.addTimes = function(e){
-        console.log("******************************");
-        console.log(JSON.stringify($scope.data.model));
-        console.log(JSON.stringify($scope.data.model1));
-        console.log(JSON.stringify($scope.data.model2));
+        let startTime = 0;
+        console.log('********************');
+        startTime = (Number($scope.data.model) * 60*60) + (Number($scope.data.model1) * 60) + (Number($scope.data.model2));
+        console.log(startTime);
         e.hide();
     }
-    this.close = function(e){
-        e.hide();
-    }
-});
-ons.ready(function() {
-    console.log("Onsen UI is ready!");
-     console.log("user_uid = " + $scope.user_uid);
-         $http({
-             method: 'POST',
-               url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_call_birthday/",
-               data:{
-                        "Employee_ID":$scope.user_uid,
-                    }
-               }
-          ).
-          success(function(data) {
-             console.log(data); 
-             //console.log(status);
-             //console.log(headers);
-             console.log("ajax successed"); 
-             $scope.resultajax="success";
-             var spbday = data.Birthday.split("-");
-             var preyear = spbday[0];
-             var premonth = spbday[1];
-             var preday = spbday[2];
-             console.log("preyear:" + preyear +" premonth:" + premonth + " preday:" + preday);
-             $scope.preyear = preyear;
-             $scope.premonth = premonth;
-             $scope.preday = preday;
-          }).
-          error(function(data, status, headers, config) {
-             console.log(status);
-             console.log(data);
-             console.log(headers);
-             console.log("ajax failed");
-             $scope.resultajax="failed";
-          });
 });
