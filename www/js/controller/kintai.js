@@ -5,9 +5,16 @@ myapp.controller('KintaiController', function($scope) {
     let stop_flag = {'work':[true],'break':[true]}; // バーを止めるのに使うflag
     let isTouch = {'syusya':false,'kyukei':false,'taisya':false,'teisyutu':false }; // ボタンの状態を管理するflag
     let bar_data = {'value':[],'all':60*60*24,'time':1,'color':[]};
-    //    const db = window.openDatabase("kintai_db", "1.0","kintai" , 1000000);
     /*
         bar_dataはバーを描くためのデータ
+        bar_data.valuleに勤怠状態が変更される度に追加されていく。
+
+        例)
+        value[i]=奇数:勤務時間
+        value[i]=偶数:休憩時間
+
+        [10000,100,10,1......]    : [10000スタート、100働く、10休む,1働く.....]
+        
 
         valueは勤務時間や休憩時間の値がそれぞれ秒単位で保存される。
         bar_data.value[i]でi=0とiが最後のインデックスの場合はバーを描くため(白く塗る)の値が
@@ -37,20 +44,17 @@ myapp.controller('KintaiController', function($scope) {
             /* 現在時刻分バーを進める */
             const date_obj = new Date(); // 現在の時間を取得して、その分バーを白で塗りつぶす
             const sec = date_obj.getHours()*60*60+date_obj.getMinutes()*60+date_obj.getSeconds();
-            let start_time = sec; //出社時間
+            let start_time = sec; //出社時間(緑のバー開始位置)
             bar_data.value.push(sec);
             bar_data.color.push("White");
             bar_data.all -= sec;
 
             this.setText("syusya","出社時間を変更");　// 出社ボタンのテキストを変更
-            this.updateBreakdown();
             isTouch.syusya = true;
             bar_data.value.push(0);
             bar_data.color.push("Yellow");
             stop_flag.work[0] = false;
             this.updateBar(stop_flag.work);
-            //        }else if(isTouch.syusya && e == 1) { // '出社'ボタン二回目押下
-            //            this.showP("syusya");
         }else if(isTouch.syusya && !isTouch.kyukei && !isTouch.taisya && e == 2){ // 休憩ボタンが押された時
             this.setText("kyukei","休憩をやめる");
             isTouch.kyukei = true;
@@ -76,20 +80,18 @@ myapp.controller('KintaiController', function($scope) {
             // '出社時間を変更'ボタンが押されたときの処理
             // ダイアログ出したい APIで取得した時間帯をプルダウンで選択
             isTouch.syusya = true;
-            this.showP("syusya");
-
+            this.showP("syusya","pop_temp1");
         }else if(isTouch.kyukei && e == 2){
-            console.log('**************休憩****************');
             // '休憩時間を変更'ボタンが押された時の処理
             // ダイアログ出したい APIで取得した時間帯をプルダウンで選択
-            this.showP("kyukei");
-
+            this.showP("kyukei","pop_temp2");
         }else if(isTouch.taisya && e == 3){
             // '退社時間を変更'ボタンが押された時の処理
             // ダイアログ出したい APIで取得した時間帯をプルダウンで選択
-            this.showP("taisya");
-
-        }else if(isTouch.teisyutu && e == 4){
+            this.showP("taisya","pop_temp3");
+        }else if(!isTouch.teisyutu && isTouch.taisya &&e == 4 ){
+            console.log('**************************************************');
+            console.log(bar_data.value);
             // '提出'ボタンが押された時の処理
             // ダイアログで注意文表示 APIでデータを登録
         }else{
@@ -97,53 +99,26 @@ myapp.controller('KintaiController', function($scope) {
         }
     };
 
-    this.updateBreakdown = function(){ // 業務時間内訳の更新
-
-        // var worktime_text = document.getElementById('worktime');
-        // var breaktime_text = document.getElementById('breaktime');
-        let dummy = [false];
-        this.loopSleep(dummy,bar_data.all,bar_data.time,function(i){
-            let worktime_data = {};
-            let seconds = 0;
-            for(let i = 1; i < bar_data.value.length; i+=2)
-                seconds += bar_data.value[i];
-            worktime_data['hours'] = Math.floor(seconds / 3600);
-            worktime_data['minutes'] = Math.floor((seconds % 3600) / 60);
-            // worktime_text.textContent = "勤務時間：" + worktime_data['hours'] + "時間" + worktime_data['minutes'] + "分";
-
-            let breaktime_data = {};
-            seconds = 0;
-            for(let i = 2; i < bar_data.value.length; i+=2)
-                seconds += bar_data.value[i];
-            breaktime_data['hours'] = Math.floor(seconds / 3600);
-            breaktime_data['minutes'] = Math.floor((seconds % 3600) / 60);
-            // breaktime_text.textContent = "休憩時間：" + breaktime_data['hours'] + "時間" + breaktime_data['minutes'] + "分";
-        });
-    }
-
     this.updateBar = function(stop_flag){ // バーの更新
         this.loopSleep(stop_flag,bar_data.all,bar_data.time,function(i){
             bar_data.value[bar_data.value.length-1] = i;
             bar_data.all--;
             let data = [];
-            for(let i = 0; i < bar_data.value.length; i++)
-                data.push({value:bar_data.value[i]});
+
+            for(let i = 0; i < bar_data.value.length; i++) data.push({value:bar_data.value[i]});
             data.push({value:bar_data.all});
 
             //グラフの色を入力
             let colors = [];
-            for (let i = 0; i < bar_data.color.length; i++)
-                colors.push(bar_data.color[i]);
+            for (let i = 0; i < bar_data.color.length; i++) colors.push(bar_data.color[i]);
             colors.push("White");
+
             const CANVAS_WIDTH =300;
             const CANVAS_HEIGHT =100;
             // barの横幅
             const _X = 0;
             // barの上下幅
             const _HEIGHT = 30;
-            // var _X = 10;
-            // var _Y = 100;
-            // var _HEIGHT = 30;
 
             let context;
             init();
@@ -204,25 +179,77 @@ myapp.controller('KintaiController', function($scope) {
         }
         loopFunc();
     }
-
     this.setText = function(id,text){ // タグにつけたidに応じてtextをセット
         const area = document.getElementById(id);
         area.textContent = text;
     }
-
-    this.showP = function($button) {
-        ons.createPopover('view/kintai.html').then(function(popover) {
-            popover.show("#"+ $button);
+    this.showP = function(button,tmpl_id) {
+        ons.createPopover(tmpl_id).then(function(popover) {
+            popover.show("#"+ button);
         });
     };
-});
-myapp.controller('PopCloseController', function($scope) {
-    this.close = function(e){
-        pop.hide();
-    }
 
+
+});
+
+myapp.controller('PopCloseController', function($scope) {
+    $scope.data = {
+        model:null,
+            hourOptions: [],
+        model1:null,
+            minOptions: [],
+        model2:null,
+            secOptions: []
+    };
+    for(let i=0;i<=24;i++){
+        $scope.data.hourOptions.push({id:i, name:i});
+    }
+    for(let i=0;i<=60;i++){
+        $scope.data.minOptions.push({id:i,name:i});
+        $scope.data.secOptions.push({id:i,name:i});
+    }
+    this.addTimes = function(e){
+        console.log("******************************");
+        console.log(JSON.stringify($scope.data.model));
+        console.log(JSON.stringify($scope.data.model1));
+        console.log(JSON.stringify($scope.data.model2));
+        e.hide();
+    }
+    this.close = function(e){
+        e.hide();
+    }
 });
 ons.ready(function() {
     console.log("Onsen UI is ready!");
+     console.log("user_uid = " + $scope.user_uid);
+         $http({
+             method: 'POST',
+               url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/profile_call_birthday/",
+               data:{
+                        "Employee_ID":$scope.user_uid,
+                    }
+               }
+          ).
+          success(function(data) {
+             console.log(data); 
+             //console.log(status);
+             //console.log(headers);
+             console.log("ajax successed"); 
+             $scope.resultajax="success";
+             var spbday = data.Birthday.split("-");
+             var preyear = spbday[0];
+             var premonth = spbday[1];
+             var preday = spbday[2];
+             console.log("preyear:" + preyear +" premonth:" + premonth + " preday:" + preday);
+             $scope.preyear = preyear;
+             $scope.premonth = premonth;
+             $scope.preday = preday;
+          }).
+          error(function(data, status, headers, config) {
+             console.log(status);
+             console.log(data);
+             console.log(headers);
+             console.log("ajax failed");
+             $scope.resultajax="failed";
+          });
 });
-

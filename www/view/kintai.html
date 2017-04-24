@@ -1,39 +1,55 @@
+<ons-template id="pop_temp1">
+    <ons-popover var ="pop"  direction="up down" cancelable ng-controller="PopCloseController as popc">
+        <form action="../js/controller/kintai.js"novalidate name="myForm" ng-submit="popc.addTimes(pop)">
+            <div style="padding: 10px; text-align: center;" >
+                <p>出社時間変更</p>
+                  <select ng-model="data.model">
+                      <option ng-repeat="option in data.hourOptions" value="{{option.id}}">{{option.name}}</option>
+                  </select>
+                  :
+                  <select ng-model="data.model1">
+                      <option ng-repeat="option in data.minOptions" value="{{option.id}}">{{option.name}}</option>
+                  </select>
+                  :
+                  <select ng-model="data.model2">
+                      <option ng-repeat="option in data.secOptions" value="{{option.id}}">{{option.name}}</option>
+                  </select>
+                  <input type="submit" value="変更" class="kintai-btn" modifier="materiali"/>
+            </div>
+        </form>
+    </ons-popover>
+</ons-template>
 
-<ons-popover var ="pop" id="popover"  direction="up down" cancelable ng-controller="PopCloseController as popc">
-  <div style="padding: 10px; text-align: center;" >
-    <p>出社時間変更</p>
-    <label for="edit-work-time"></label>
-    <select id="edit-work-year" name="edit-work-time">
-        <option value="2017">2017</option>
-        <option value="2016">2016</option>
-        <option value="2015">2015</option>
-    </select>
-    <select id="edit-work-month" name="edit-work-time">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-    </select>
-    <select id="edit-work-day" name="edit-work-time">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-    </select>
-    <input type="button" class="kintai-btn" ng-click="popc.close()" value="変更">
-  </div>
-</ons-popover>
+<ons-template id="pop_temp2">
+    <ons-popover var ="pop2" direction="up down" cancelable ng-controller="PopCloseController as popc">
+        <div style="padding: 10px; text-align: center;" >
+            <p>休憩時間変更</p>
+            <input type="button" class="kintai-btn" modifier="material"ng-click="popc.close(pop2)" value="変更">
+        </div>
+    </ons-popover>
+</ons-template>
+
+<ons-template id="pop_temp3">
+    <ons-popover var ="pop3" direction="up down" cancelable ng-controller="PopCloseController as popc">
+        <div style="padding: 10px; text-align: center;" >
+            <p>退社時間変更</p>
+            <input type="button" class="kintai-btn" modifier="material"ng-click="popc.close(pop3)" value="変更">
+        </div>
+    </ons-popover>
+</ons-template>
 
 <ons-page id="breakdown" ng-controller="KintaiController as kintai">
-    <ons-toolbar><!--本当はツールバーの表示は一つのテンプレートに書いたほうがSPAぽくていい-->
+    <ons-toolbar>
         <div class="left">
             <ons-toolbar-button ng-click="app.toggle()">
-                <ons-icon icon="md-menu"></ons-icon>
+            <ons-icon icon="md-menu"> </ons-icon>
             </ons-toolbar-button>
         </div>
         <div class="center">
             出退勤
         </div>
     </ons-toolbar>
-    <canvas id="bar-chart-area" width="300" height="30" style="overflow: hidden;margin:100px 0px 50px"></canvas>
+    <canvas id="bar-chart-area" width="300" height="30" style="overflow: hidden;margin:100px 0px 50px">^M</canvas>
     <ons-button class="kintai-btn"id="syusya" modifier="material" ng-click="kintai.buttonManager(1)">出社</ons-button>
     <br />
     <ons-button class="kintai-btn"id="kyukei" modifier="material" ng-click="kintai.buttonManager(2)">休憩</ons-button>
@@ -42,4 +58,3 @@
     <br />
     <ons-button class="kintai-btn"id="teisyutu" modifier="material" ng-click="kintai.buttonManager(4)">提出</ons-button>
 </ons-page>
-
