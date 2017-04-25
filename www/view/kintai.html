@@ -1,6 +1,6 @@
-<ons-template id="pop_temp1">
+<ons-template ng-app ="myModule"id="pop_temp1">
     <ons-popover var ="pop"  direction="up down" cancelable ng-controller="PopCloseController as popc">
-        <form action="../js/controller/kintai.js"novalidate name="myForm" ng-submit="popc.addTimes(pop)">
+        <form action="../js/controller/kintai.js"novalidate name="myForm" ng-submit="popc.addTimes(pop,1)">
             <div style="padding: 10px; text-align: center;" >
                 <p>出社時間変更</p>
                   <select ng-model="data.model">
@@ -10,10 +10,6 @@
                   <select ng-model="data.model1">
                       <option ng-repeat="option in data.minOptions" value="{{option.id}}">{{option.name}}</option>
                   </select>
-                  :
-                  <select ng-model="data.model2">
-                      <option ng-repeat="option in data.secOptions" value="{{option.id}}">{{option.name}}</option>
-                  </select>
                   <input type="submit" value="変更" class="kintai-btn" modifier="materiali"/>
             </div>
         </form>
@@ -22,23 +18,41 @@
 
 <ons-template id="pop_temp2">
     <ons-popover var ="pop2" direction="up down" cancelable ng-controller="PopCloseController as popc">
-        <div style="padding: 10px; text-align: center;" >
-            <p>休憩時間変更</p>
-            <input type="button" class="kintai-btn" modifier="material"ng-click="popc.close(pop2)" value="変更">
-        </div>
+        <form action="../js/controller/kintai.js"novalidate name="myForm" ng-submit="popc.addTimes(pop2,2)">
+            <div style="padding: 10px; text-align: center;" >
+                <p>休憩時間変更</p>
+                  <select ng-model="data.model">
+                      <option ng-repeat="option in data.hourOptions" value="{{option.id}}">{{option.name}}</option>
+                  </select>
+                  :
+                  <select ng-model="data.model1">
+                      <option ng-repeat="option in data.minOptions" value="{{option.id}}">{{option.name}}</option>
+                  </select>
+                <input type="submit" class="kintai-btn" modifier="material" value="変更">
+            </div>
+        </form>
     </ons-popover>
 </ons-template>
 
 <ons-template id="pop_temp3">
     <ons-popover var ="pop3" direction="up down" cancelable ng-controller="PopCloseController as popc">
-        <div style="padding: 10px; text-align: center;" >
-            <p>退社時間変更</p>
-            <input type="button" class="kintai-btn" modifier="material"ng-click="popc.close(pop3)" value="変更">
-        </div>
+        <form action="../js/controller/kintai.js"novalidate name="myForm" ng-submit="popc.addTimes(pop3,3)">
+            <div style="padding: 10px; text-align: center;" >
+                <p>退社時間変更</p>
+                      <select ng-model="data.model">
+                          <option ng-repeat="option in data.hourOptions" value="{{option.id}}">{{option.name}}</option>
+                      </select>
+                      :
+                      <select ng-model="data.model1">
+                          <option ng-repeat="option in data.minOptions" value="{{option.id}}">{{option.name}}</option>
+                      </select>
+                <input type="submit" value="変更" class="kintai-btn" modifier="materiali"/>
+            </div>
+        </form>
     </ons-popover>
 </ons-template>
 
-<ons-page id="breakdown" ng-controller="KintaiController as kintai">
+<ons-page id="breakdown" ng-app="myModule"ng-controller="KintaiController as kintai">
     <ons-toolbar>
         <div class="left">
             <ons-toolbar-button ng-click="app.toggle()">

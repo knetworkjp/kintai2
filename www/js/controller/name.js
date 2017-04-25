@@ -68,6 +68,7 @@ myapp.controller('NameController', function($scope, $http) {
              ons.createDialog('view/d_name.html', {parentScope: $scope}).then(function(dialog) {
                 dialog.show();
             });
+            $scope.tabNavigator.pushPage("index.html");
           }).
           error(function(data, status, headers, config) {
              console.log(status);
@@ -79,6 +80,8 @@ myapp.controller('NameController', function($scope, $http) {
                 dialog.show();
             });
           });
+          
+        
     };
     
 });

@@ -33,7 +33,7 @@ myapp.controller('ItiranController', ['$scope','$http',function($scope,$http) {
         var year = now.getFullYear();
         var month = now.getMonth()+1;
         var yyyymm = year+'-'+month;
-        console.log(yyyymm);
+        console.log("yyyymm=" + yyyymm);
         
         //APIで値を取得
         console.log("ruikeiData start ajax!");
@@ -48,7 +48,8 @@ myapp.controller('ItiranController', ['$scope','$http',function($scope,$http) {
             url:"https://labo.ef-4.co.jp/deepblue/kintaiApp/kintai_ruikei/",
             data:{
                 "Employee_ID":usercode,
-                "Month":yyyymm
+                //"Month":yyyymm
+                "Month":"2017-04"
             }
         })
         .success(function(data) {
