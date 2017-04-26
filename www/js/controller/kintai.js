@@ -6,6 +6,7 @@ myapp.service('ShareService',function(){
         end:'zz:zz'
     };
 });
+
 myapp.controller('KintaiController', function($scope, $http,ShareService) {
 
     /* 初期化 */
@@ -14,7 +15,7 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
 
     // ボタンの状態を管理するflag
     let isTouch = {'syusya':false,'kyukei':false,'taisya':false,'teisyutu':false }; 
-    let bar_data = {'value':[],'all':60*60*24,'time':1,'color':[]};
+    let bar_data = {'value':[],'all':60*60*24,'time':1000,'color':[]};
 
     //現在の時間をゼロ補完して返す
     //例)"2017-04-25"
@@ -66,6 +67,8 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
             this.updateBar(stop_flag.work);
             let hms =this.toHms(start_time);
 
+            console.log('出社時間:'+hms);
+
             //「KINTAI_ARR」のAPI殴る
             $http({
                 method: 'POST',
@@ -85,8 +88,10 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
                     console.log(data);
                     console.log(headers);
                     console.log("ajax failed");
+                    ons.createPopover("pop_temp0").then(function(popover) {
+                        popover.show("#syusya");
+                    });
                 });
-
         // 休憩ボタンが押された時
         }else if(isTouch.syusya && !isTouch.kyukei && !isTouch.taisya && e == 2){ 
             this.setText("kyukei","休憩をやめる");
@@ -120,7 +125,7 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
             this.showP("syusya","pop_temp1");
 
         // '休憩時間を変更'ボタンが押された時の処理
-        }else if(isTouch.kyukei && e == 2){
+        }else if(!isTouch.kyukei && e == 2){
             this.showP("kyukei","pop_temp2");
 
         // '退社時間を変更'ボタンが押された時の処理
@@ -155,6 +160,13 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
                 endTime = ShareService.end;
             }
 
+            console.log('出社時間:'+startTime);
+            console.log('休憩時間:'+breakTime);
+            console.log('退社時間:'+endTime);
+
+            console.log(datatime);
+
+
             //「KINTAI_SUB」のAPIを殴る
             $http({
                 method: 'POST',
@@ -165,18 +177,27 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
                     "Break_Time":breakTime,
                     "Clock_out_Time":endTime
                 }
-            }
-            ).
-                success(function(data) {
+            }).success(function(data) {
                     console.log(data);
                     console.log("ajax successed");
-                }).
-                error(function(data, status, headers, config) {
+                    ons.createPopover("pop_temp4").then(function(popover) {
+                        let time = document.getElementById("start_time");
+                        let time1 = document.getElementById("break_time");
+                        let time2 = document.getElementById("end_time");
+                        time.textContent = "出社時間:"+startTime;
+                        time1.textContent = "休憩時間:"+breakTime;
+                        time2.textContent = "退社時間:"+endTime;
+                        popover.show("#teisyutu");
+                    });
+            }).error(function(data, status, headers, config) {
                     console.log(status);
                     console.log(data);
                     console.log(headers);
                     console.log("ajax failed");
-                });
+                    ons.createPopover("pop_temp5").then(function(popover) {
+                        popover.show("#teisyutu");
+                    });
+            });
         }else{
 
         }
@@ -223,6 +244,7 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
 
             const CANVAS_WIDTH =300;
             const CANVAS_HEIGHT =100;
+
             // barの横幅
             const _X = 0;
             // barの上下幅
@@ -270,11 +292,17 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
 
 
     // 指定した回数と遅延時間で関数を回す
+    // break_flag work brack
+    // _loopLimit残りの時間(秒)
+    // interval = 1?
+    // _mainFunc
     this.loopSleep = function(break_flag,_loopLimit,_interval, _mainFunc){
+
         const loopLimit = _loopLimit;
         const interval = _interval;
         const mainFunc = _mainFunc;
         let i = 0;
+
         const loopFunc = function () {
             if(break_flag[0]) return;
             const result = mainFunc(i);
@@ -282,6 +310,8 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
                 // break機能
                 return;
             }
+
+            //loopFuncが1になったらbreak
             if (++i < loopLimit) {
                 setTimeout(loopFunc, interval);
             }
@@ -321,7 +351,7 @@ myapp.controller('PopCloseController', function($scope,ShareService) {
     for(let i=0;i<=24;i++){
         $scope.data.hourOptions.push({id:i, name:i});
     }
-    for(let i=0;i<=60;i++){
+    for(let i=0;i<60;i++){
         if(i%15 == 0){
             $scope.data.minOptions.push({id:i,name:i});
         }

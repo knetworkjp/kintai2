@@ -16,6 +16,14 @@
     </ons-popover>
 </ons-template>
 
+<ons-template id="pop_temp0">
+    <ons-popover var ="pop0" direction="up down" cancelable ng-controller="PopCloseController as popc">
+        <div style="padding: 10px; text-align: center;" >
+            <p>既に出社済みです</p>
+        </div>
+    </ons-popover>
+</ons-template>
+
 <ons-template id="pop_temp2">
     <ons-popover var ="pop2" direction="up down" cancelable ng-controller="PopCloseController as popc">
         <form action="../js/controller/kintai.js"novalidate name="myForm" ng-submit="popc.addTimes(pop2,2)">
@@ -52,6 +60,25 @@
     </ons-popover>
 </ons-template>
 
+<ons-template id="pop_temp4">
+    <ons-popover var ="pop4" direction="up down" cancelable ng-controller="PopCloseController as popc">
+        <div style="padding: 10px; text-align: center;" >
+            <p>本日もお疲れ様です</p>
+            <p id="start_time"></p>
+            <p id="break_time"></p>
+            <p id="end_time"></p>
+        </div>
+    </ons-popover>
+</ons-template>
+
+<ons-template id="pop_temp5">
+    <ons-popover var ="pop5" direction="up down" cancelable ng-controller="PopCloseController as popc">
+        <div style="padding: 10px; text-align: center;" >
+            <p>提出エラー</p>
+        </div>
+    </ons-popover>
+</ons-template>
+
 <ons-page id="breakdown" ng-app="myModule"ng-controller="KintaiController as kintai">
     <ons-toolbar>
         <div class="left">
@@ -63,7 +90,7 @@
             出退勤
         </div>
     </ons-toolbar>
-    <canvas id="bar-chart-area" width="300" height="30" style="overflow: hidden;margin:100px 0px 50px">^M</canvas>
+    <canvas id="bar-chart-area" width="400" height="30" style="overflow: hidden;margin:100px 0px 50px">^M</canvas>
     <ons-button class="kintai-btn"id="syusya" modifier="material" ng-click="kintai.buttonManager(1)">出社</ons-button>
     <br />
     <ons-button class="kintai-btn"id="kyukei" modifier="material" ng-click="kintai.buttonManager(2)">休憩</ons-button>
