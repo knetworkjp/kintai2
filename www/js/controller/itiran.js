@@ -20,20 +20,21 @@ myapp.controller('ItiranController', ['$scope','$http',function($scope,$http) {
         return true;
     }
     
-    $scope.itiranList = function(){
+    $scope.itiranList = function(callback){
+        $scope.resulthttp
         
         var user = firebase.auth().currentUser; // 現在ログインしているユーザを取得
         var usercode;
         if (user != null) {
             usercode = user.uid; // Firebaseのuser_uidを取得
         }
-        console.log('GET user_uid = ' + usercode);
+        //console.log('GET user_uid = ' + usercode);
         
         var now = new Date();
         var year = now.getFullYear();
         var month = now.getMonth()+1;
         var yyyymm = year+'-'+month;
-        console.log("yyyymm=" + yyyymm);
+        //console.log("yyyymm=" + yyyymm);
         
         //APIで値を取得
         console.log("ruikeiData start ajax!");
@@ -54,7 +55,7 @@ myapp.controller('ItiranController', ['$scope','$http',function($scope,$http) {
         })
         .success(function(data) {
             console.log(data);
-            console.log("ajax successed"); 
+            //console.log("ajax successed"); 
             $scope.resultajax="success";
             var objRuikei = data;
             console.log('objRuikei='+JSON.stringify(objRuikei));
@@ -68,7 +69,7 @@ myapp.controller('ItiranController', ['$scope','$http',function($scope,$http) {
          var totaldays = objRuikei.totalWorkdays*12;
          var comment = "";
          var classname = "";
-         if (totaldays <= time[0]) {
+         if (totaldays <= time) {
                 comment = "働きすぎですよ!!(｀・д・)σﾒｯ!";
                 classname = "over";
             } else {
@@ -83,19 +84,31 @@ myapp.controller('ItiranController', ['$scope','$http',function($scope,$http) {
             $scope.totalOvertime = objRuikei.totalOvertime;
             $scope.totalLate = objRuikei.totalLate;
             $scope.totalLeaveEarly = objRuikei.totalLeaveEarly;
-        
+            $scope.resulthttp = true;
+            console.log("resulthttp1 = " + $scope.resulthttp);
+            callback();
         })
         .error(function(data, status, headers, config) {
             console.log(status);
             console.log(data);
             console.log(headers);
-            console.log("ajax failed");
+            //console.log("ajax failed");
             $scope.resultajax="failed";
+            $scope.resulthttp = false;
+            console.log("resulthttp1 = " + $scope.resulthttp);
+            callback();
         });
     }
 
+    var callbackAjax = function(){
+        console.log("!callback!")
+        if(!$scope.resulthttp){
+            $scope.itiranList(callbackAjax);
+        };
+    }
+
     ons.ready(function() {
-        $scope.itiranList();
+        $scope.itiranList(callbackAjax);
         console.log("IchiranController is ready!");
     });
 }]);
