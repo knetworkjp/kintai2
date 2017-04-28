@@ -5,8 +5,17 @@
     border : thin solid #D3D3D3;
 }
 .kintai-btn {
-    width: 60%;
-    margin: 2% 20%;
+    width: 90%;
+    height: 100px;
+    margin: 1% 5%;
+    font-size: 40px;
+    position; relative;
+}
+
+#syusha span {
+  position: absolute;
+  top: 50%;
+  margin-top: -1.0rem;
 }
 
 .over{
@@ -16,4 +25,8 @@
 
 .default{
     background-color: #FFF;
+}
+
+.resizeimage{
+    width: 50vw; 
 }

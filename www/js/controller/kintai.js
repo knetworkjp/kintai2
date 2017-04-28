@@ -11,10 +11,10 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
 
     /* 初期化 */
     // バーを止めるのに使うflag
-    let stop_flag = {'work':[true],'break':[true]}; 
+    let stop_flag = {'work':[true],'break':[true]};
 
     // ボタンの状態を管理するflag
-    let isTouch = {'syusya':false,'kyukei':false,'taisya':false,'teisyutu':false }; 
+    let isTouch = {'syusya':false,'kyukei':false,'taisya':false,'teisyutu':false };
     let bar_data = {'value':[],'all':60*60*24,'time':1000,'color':[]};
 
     //現在の時間をゼロ補完して返す
@@ -48,10 +48,10 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
         const sec = date_obj.getHours()*60*60+date_obj.getMinutes()*60+date_obj.getSeconds();
 
         //出社時間(緑のバー開始位置)
-        let start_time = sec; 
+        let start_time = sec;
 
         // '出社'ボタンが初めて押されたとき
-        if(!isTouch.syusya && e == 1){ 
+        if(!isTouch.syusya && e == 1){
 
             /* 現在時刻分バーを進める */
             bar_data.value.push(sec);
@@ -93,7 +93,7 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
                     });
                 });
         // 休憩ボタンが押された時
-        }else if(isTouch.syusya && !isTouch.kyukei && !isTouch.taisya && e == 2){ 
+        }else if(isTouch.syusya && !isTouch.kyukei && !isTouch.taisya && e == 2){
             this.setText("kyukei","休憩をやめる");
             isTouch.kyukei = true;
             bar_data.value.push(0);
@@ -103,7 +103,7 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
             this.updateBar(stop_flag.break);
 
         // 休憩をやめるボタンが押された時
-        }else if(isTouch.syusya && isTouch.kyukei && !isTouch.taisya && e == 2){ 
+        }else if(isTouch.syusya && isTouch.kyukei && !isTouch.taisya && e == 2){
             this.setText("kyukei","休憩");
             isTouch.kyukei = false;
             bar_data.value.push(0);
@@ -113,7 +113,7 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
             this.updateBar(stop_flag.work);
 
         // 退社ボタンが押された時
-        }else if(isTouch.syusya && !isTouch.taisya && e == 3){ 
+        }else if(isTouch.syusya && !isTouch.taisya && e == 3){
             this.setText("taisya","退社時間を変更");
             this.setText("kyukei","休憩時間を変更");
             isTouch.taisya = true;
@@ -125,7 +125,7 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
             this.showP("syusya","pop_temp1");
 
         // '休憩時間を変更'ボタンが押された時の処理
-        }else if(!isTouch.kyukei && e == 2){
+        }else if(e == 2){
             this.showP("kyukei","pop_temp2");
 
         // '退社時間を変更'ボタンが押された時の処理
@@ -135,8 +135,8 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
 
             //b:休憩合計
             //c:退社時間
-            let b = 0; 
-            let c = 0; 
+            let b = 0;
+            let c = 0;
 
             //勤怠状態を保持した配列の中身を以下で分ける
             //・休憩時間合計
@@ -146,9 +146,16 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
                 if(i != bar_data.value[0]){c += bar_data.value[i];}
             }
 
+
             let startTime = this.toHms(bar_data.value[0]);
-            let breakTime = this.toHms(b);
+            let breakTime = "";
             let endTime = this.toHms(c);
+
+            if(b <= 900){
+                breakTime = "00:00";
+            }else{
+                breakTime = this.toHms(b);
+            }
 
             //勤怠時間が変更されているか確認
             //変更されている場合は上書き
@@ -160,11 +167,15 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
                 endTime = ShareService.end;
             }
 
-            console.log('出社時間:'+startTime);
-            console.log('休憩時間:'+breakTime);
-            console.log('退社時間:'+endTime);
+            if(endTime == null){
+                endTime ="00:00";
+            }
 
-            console.log(datatime);
+            console.dir('出社時間:'+startTime);
+            console.dir('休憩時間:'+breakTime);
+            console.dir('退社時間:'+endTime);
+
+
 
 
             //「KINTAI_SUB」のAPIを殴る
@@ -228,7 +239,7 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
 
 
     // バーの更新
-    this.updateBar = function(stop_flag){ 
+    this.updateBar = function(stop_flag){
         this.loopSleep(stop_flag,bar_data.all,bar_data.time,function(i){
             bar_data.value[bar_data.value.length-1] = i;
             bar_data.all--;
@@ -253,7 +264,7 @@ myapp.controller('KintaiController', function($scope, $http,ShareService) {
             let context;
             init();
 
-            
+
             //init - Main処理
             function init(){
                 const canvas = document.getElementById('bar-chart-area');

@@ -90,12 +90,15 @@
             出退勤
         </div>
     </ons-toolbar>
-    <canvas id="bar-chart-area" width="400" height="30" style="overflow: hidden;margin:100px 0px 50px">^M</canvas>
-    <ons-button class="kintai-btn"id="syusya" modifier="material" ng-click="kintai.buttonManager(1)">出社</ons-button>
+    <!--<span position="position:static; top:10px; left:10px">0:00                                                                          </span>
+    <span position="position:static; top:10px; left:100px">12:00</span>
+    -->
+    <canvas id="bar-chart-area" height="100" width="400" style="overflow: hidden;margin:70px 35px 85px">^M</canvas>
+    <ons-button class="kintai-btn"id="syusya" modifier="large--quiet" ng-click="kintai.buttonManager(1)"><span>出社</span></ons-button>
     <br />
-    <ons-button class="kintai-btn"id="kyukei" modifier="material" ng-click="kintai.buttonManager(2)">休憩</ons-button>
+    <ons-button class="kintai-btn"id="kyukei" modifier="large--quiet" ng-click="kintai.buttonManager(2)">休憩</ons-button>
     <br />
-    <ons-button class="kintai-btn"id="taisya" modifier="material" ng-click="kintai.buttonManager(3)">退社</ons-button>
+    <ons-button class="kintai-btn"id="taisya" modifier="large--quiet" ng-click="kintai.buttonManager(3)">退社</ons-button>
     <br />
-    <ons-button class="kintai-btn"id="teisyutu" modifier="material" ng-click="kintai.buttonManager(4)">提出</ons-button>
+    <ons-button class="kintai-btn"id="teisyutu" modifier="large--quiet" ng-click="kintai.buttonManager(4)">提出</ons-button>
 </ons-page>
