@@ -30,3 +30,8 @@
 .resizeimage{
     width: 50vw; 
 }
+
+.wrapper{
+  width: 80%;
+  height: 10%;
+}
